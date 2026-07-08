@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+/**
+ * main - Fizz-Buzz
+ * Description: 3 multi print Fizz, 5 multi print Buzz, both print FizzBuzz
+ * Return: N/A
+ */
+
+int main(void)
+{
+	int i;
+
+	for (i = 1; i <= 100; i++)
+	{
+		if ((i % 3 == 0) && (i % 5 == 0))
+			printf("FizzBuzz");
+		else if (i % 3 == 0)
+			printf("Fizz");
+		else if (i % 5 == 0)
+			printf("Buzz");
+		else
+			printf("%d", i);
+		
+		printf(" ");
+	}
+	printf("\n");
+}
