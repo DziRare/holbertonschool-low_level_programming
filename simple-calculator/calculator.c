@@ -1,4 +1,16 @@
 #include <stdio.h>
+/**
+ * add - Addition
+ * @a: First number to add
+ * @b: Second number to add
+ * Description: Adds the sum of two numbers
+ * Return: Sum of the two numbers
+ */
+int add(int a, int b)
+{
+	return (a + b);
+}
+
 
 /**
  * present_menu - Displays Menu
@@ -8,6 +20,9 @@
 int present_menu(void)
 {
 	int user_choice;
+	int a;
+	int b;
+
 	user_choice = -1;
 
 	printf("Simple Calculator\n\n");
@@ -17,15 +32,24 @@ int present_menu(void)
 	printf("4) Divide\n");
 	printf("0) Quit\n\n");
 
-	while (user_choice < 0 || user_choice > 4)
+	while (user_choice != 0)
 	{
 		printf("What operation would you like to perform: ");
 		scanf("%d", &user_choice);
-		printf("Choice: %d\n", user_choice);
+		printf("\nChoice: %d\n", user_choice);
 
 		if (user_choice < 0 || user_choice > 4)
-			printf("Invalid choice\n");
-			
+		{
+			printf("Invalid choice\n\n");
+		}
+		else if (user_choice == 1)
+		{
+			printf("A: ");
+			scanf("%d", &a);
+			printf("B: ");
+			scanf("%d", &b);
+			printf("Result: %d\n\n", add(a, b));
+		}
 	}
 
 	if (user_choice == 0)
