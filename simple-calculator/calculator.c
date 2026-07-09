@@ -8,6 +8,7 @@
 int present_menu(void)
 {
 	int user_choice;
+	user_choice = -1;
 
 	printf("Simple Calculator\n\n");
 	printf("1) Add\n");
@@ -16,9 +17,16 @@ int present_menu(void)
 	printf("4) Divide\n");
 	printf("0) Quit\n\n");
 
-	printf("What operation would you like to perform: ");
-	scanf("%d", &user_choice);
-	printf("Choice: %d\n", user_choice);
+	while (user_choice < 0 || user_choice > 4)
+	{
+		printf("What operation would you like to perform: ");
+		scanf("%d", &user_choice);
+		printf("Choice: %d\n", user_choice);
+
+		if (user_choice < 0 || user_choice > 4)
+			printf("Invalid choice\n");
+			
+	}
 
 	if (user_choice == 0)
 		printf("Bye!\n");
