@@ -7,14 +7,7 @@
  */
 int main(void)
 {
-	int i;
-	char quote[] = "and that piece of art is useful";
-
-	for (i = 0; i < 31; i++)
-	{
-		putchar(quote[i]);
-	}
-	putchar('\n');
+	fwrite("and that piece of art is useful\n", 1, 32, stderr);
 
 	return (1);
 }
