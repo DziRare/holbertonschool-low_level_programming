@@ -2,7 +2,7 @@
 
 /**
  * main - Print quote
- * Description: Prints a quote without printf or puts
+ * Description: Prints a quote with restrictions to functions
  * Return: 1 (Success)
  */
 int main(void)
