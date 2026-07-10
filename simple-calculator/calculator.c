@@ -1,14 +1,48 @@
 #include <stdio.h>
 /**
  * add - Addition
- * @a: First number to add
- * @b: Second number to add
- * Description: Adds the sum of two numbers
+ * @num_a: First number to add
+ * @num_b: Second number to add
+ * Description: Finds the sum of two numbers
  * Return: Sum of the two numbers
  */
-int add(int a, int b)
+int add(int num_a, int num_b)
 {
-	return (a + b);
+	return (num_a + num_b);
+}
+
+/**
+ * subtract - Subtraction
+ * @num_a: Number to subtract from
+ * @num_b: Number to subtact
+ * Description: Finds the difference of two numbers
+ * Return: Difference of the two numbers
+ */
+int subtract(int num_a, int num_b)
+{
+	return (num_a - num_b);
+}
+
+/**
+ * perform_operation - +, -, /, *
+ * @operation: The operation that the user would like to perform
+ * @a: The first number
+ * @b: The second number
+ * Description: Run the operation prompted by the user
+ * Return: Result of the operation
+ */
+int perform_operation(int operation, int a, int b)
+{
+	int result = 0;
+
+	if (operation == 1)
+		result = add(a, b);
+	else if (operation == 2)
+		result = subtract(a, b);
+	else
+		printf("Operation in progress. Try again later.");
+
+	return (result);
 }
 
 
@@ -17,7 +51,7 @@ int add(int a, int b)
  * Description: Shows menu and prompts user for operation (+, -, /, *)
  * Return: User's choice of operation
  */
-int present_menu(void)
+void present_menu(void)
 {
 	int user_choice;
 	int a;
@@ -41,21 +75,20 @@ int present_menu(void)
 		if (user_choice < 0 || user_choice > 4)
 		{
 			printf("Invalid choice\n\n");
+		} else if (user_choice == 0)
+		{
+			printf("Bye!\n");
 		}
-		else if (user_choice == 1)
+		else
 		{
 			printf("A: ");
 			scanf("%d", &a);
 			printf("B: ");
 			scanf("%d", &b);
-			printf("Result: %d\n\n", add(a, b));
+			printf("Result: %d\n\n", perform_operation(user_choice, a, b));
 		}
+
 	}
-
-	if (user_choice == 0)
-		printf("Bye!\n");
-
-	return (user_choice);
 }
 
 /**
