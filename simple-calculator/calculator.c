@@ -8,20 +8,23 @@
  * Description: Run the operation prompted by the user
  * Return: Result of the operation
  */
-int perform_operation(int operation, int a, int b)
+int perform_operation(int operation, float a, float b)
 {
-	int result = 0;
-
 	if (operation == 1)
-		result = a + b;
+		printf("Result: %.2f\n\n", a + b);
 	else if (operation == 2)
-		result = a - b;
+		printf("Result: %.2f\n\n", a - b);
 	else if (operation  == 3)
-		result = a * b;
+		printf("Result: %.2f\n\n", a * b);
+	else if (operation == 4)
+		if (b == 0)
+			printf("Error: division by zero\n");
+		else
+			printf("Result: %.2f\n\n", a / b);
 	else
-		printf("Operation in progress. Try again later.\n");
+		printf("I don't know how we got here. You shouldn't exist.\n");
 
-	return (result);
+	return (0);
 }
 
 /**
@@ -32,8 +35,8 @@ int perform_operation(int operation, int a, int b)
 void present_menu(void)
 {
 	int user_choice;
-	int a;
-	int b;
+	float a;
+	float b;
 
 	user_choice = -1;
 
@@ -55,15 +58,15 @@ void present_menu(void)
 			printf("Invalid choice\n\n");
 		} else if (user_choice == 0)
 		{
-			printf("Bye!\n");
+			printf("Bye!\n\n");
 		}
 		else
 		{
 			printf("A: ");
-			scanf("%d", &a);
+			scanf("%f", &a);
 			printf("B: ");
-			scanf("%d", &b);
-			printf("Result: %d\n\n", perform_operation(user_choice, a, b));
+			scanf("%f", &b);
+			perform_operation(user_choice, a, b);
 		}
 
 	}
