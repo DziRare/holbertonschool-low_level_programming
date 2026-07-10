@@ -1,30 +1,7 @@
 #include <stdio.h>
-/**
- * add - Addition
- * @num_a: First number to add
- * @num_b: Second number to add
- * Description: Finds the sum of two numbers
- * Return: Sum of the two numbers
- */
-int add(int num_a, int num_b)
-{
-	return (num_a + num_b);
-}
 
 /**
- * subtract - Subtraction
- * @num_a: Number to subtract from
- * @num_b: Number to subtact
- * Description: Finds the difference of two numbers
- * Return: Difference of the two numbers
- */
-int subtract(int num_a, int num_b)
-{
-	return (num_a - num_b);
-}
-
-/**
- * perform_operation - +, -, /, *
+ * perform_operation - +, -, *, /
  * @operation: The operation that the user would like to perform
  * @a: The first number
  * @b: The second number
@@ -36,15 +13,16 @@ int perform_operation(int operation, int a, int b)
 	int result = 0;
 
 	if (operation == 1)
-		result = add(a, b);
+		result = a + b;
 	else if (operation == 2)
-		result = subtract(a, b);
+		result = a - b;
+	else if (operation  == 3)
+		result = a * b;
 	else
-		printf("Operation in progress. Try again later.");
+		printf("Operation in progress. Try again later.\n");
 
 	return (result);
 }
-
 
 /**
  * present_menu - Displays Menu
