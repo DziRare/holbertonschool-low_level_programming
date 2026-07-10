@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <unistd.h>
 
 /**
  * main - Print quote
@@ -7,7 +7,6 @@
  */
 int main(void)
 {
-	fwrite("and that piece of art is useful\n", 1, 32, stderr);
-
+	write(1, "and that piece of art is useful\n", 32);
 	return (1);
 }
