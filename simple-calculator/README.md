@@ -2,10 +2,10 @@
 
 A calculator program that takes two numbers as input from the user and performs basic arithmeitc.
 
-Addition (+): Takes two numbers from the user and returns their sum to two decimal places.
-Subtraction (-): Takes two numbers from the user and returns their difference to two decimal places.
-Multiplication (*): Takes two numbers from the user and returns their product to two decimal places.
-Division (/): Takes two numbers from the user and returns their quotient to two decimal places.
+- Addition (+): Takes two numbers from the user and returns their sum to two decimal places.
+- Subtraction (-): Takes two numbers from the user and returns their difference to two decimal places.
+- Multiplication (*): Takes two numbers from the user and returns their product to two decimal places.
+- Division (/): Takes two numbers from the user and returns their quotient to two decimal places.
 
 ## Get Started:
 
