@@ -87,9 +87,9 @@ int main(void)
 	*/
 
 	printf("TOTAL seconds: %.6f\n", (float)total_time / CLOCKS_PER_SEC);
-	printf("BUILD_DATA seconds: %6.f\n", (float)build_time / CLOCKS_PER_SEC);
-	printf("PROCESS seconds: %6.f\n", (float)process_time / CLOCKS_PER_SEC);
-	printf("REDUCE seconds: %6.f\n", (float)reduce_time / CLOCKS_PER_SEC);
+	printf("BUILD_DATA seconds: %.6f\n", (float)build_time / CLOCKS_PER_SEC);
+	printf("PROCESS seconds: %.6f\n", (float)process_time / CLOCKS_PER_SEC);
+	printf("REDUCE seconds: %.6f\n", (float)reduce_time / CLOCKS_PER_SEC);
 
 	return 0;
 }
