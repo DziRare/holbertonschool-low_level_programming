@@ -34,19 +34,24 @@ void perform_operation(int operation, float a, float b)
  */
 float input_numbers(char place)
 {
-	int invalid = 1;
+	int invalid;
 	float num;
-	char term;
-	int c;
+	char final_char;
+	int clear;
+
+	invalid = 1;
 
 	while (invalid == 1)
 	{
 		printf("Enter number %c: ", place);
-		if (scanf("%f%c", &num, &term) != 2 || term != '\n')
+		if (scanf("%f%c", &num, &final_char) != 2 || final_char != '\n')
 		{
 			printf("Invalid number!\n\n");
-			while ((c = getchar()) != '\n' && c != EOF)
-				;
+
+			/* Empty stdin */
+			clear = getchar();
+			while (clear != '\n' && clear != EOF)
+				clear = getchar();
 		}
 		else
 		{
@@ -64,19 +69,23 @@ float input_numbers(char place)
  */
 int user_choice(void)
 {
-	int operation = 9;
+	int operation;
+	char final_char;
+	int clear;
+
+	operation = 9;
 
 	while (operation != 0)
 	{
-		int c;
-		char term;
-
 		printf("What operation would you like to perform: ");
-		if (scanf("%d%c", &operation, &term) != 2 || term != '\n')
+		if (scanf("%d%c", &operation, &final_char) != 2 || final_char != '\n')
 		{
 			printf("Invalid choice!\n\n");
-			while ((c = getchar()) != '\n' && c != EOF)
-				;
+
+			/* Clear stdin*/
+			clear = getchar();
+			while (clear != '\n' && clear != EOF)
+				clear = getchar();
 		}
 		else
 		{
