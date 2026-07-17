@@ -21,21 +21,23 @@ Single-pass is about 25,000 times faster, cutting runtime by 99.996%. Its result
 ### Instrumentation Lab
 
 #### Run 1
-TOTAL seconds: 0.000676
-BUILD_DATA seconds: 0.000320
-PROCESS seconds: 0.000237
-REDUCE seconds: 0.000113
+TOTAL seconds: 0.000676 
+BUILD_DATA seconds: 0.000320 
+PROCESS seconds: 0.000237 
+REDUCE seconds: 0.000113 
 
 #### Run 2
-TOTAL seconds: 0.000714
-BUILD_DATA seconds: 0.000284
-PROCESS seconds: 0.000282
-REDUCE seconds: 0.000134
+TOTAL seconds: 0.000714 
+BUILD_DATA seconds: 0.000284 
+PROCESS seconds: 0.000282 
+REDUCE seconds: 0.000134 
 
 #### Run 3
-TOTAL seconds: 0.000839
-BUILD_DATA seconds: 0.000416
-PROCESS seconds: 0.000282
-REDUCE seconds: 0.000133
+TOTAL seconds: 0.000839 
+BUILD_DATA seconds: 0.000416 
+PROCESS seconds: 0.000282 
+REDUCE seconds: 0.000133 
 
-##
+## Relation Between Runtime and Engery Consumption
+
+None of these programs directly measure energy consumption, and I did not use a power-measuring tool. Execution time can only be used as an indirect sign of energy use as a program that keeps the CPU working longer (like naive at 0.77s versus 0.00003s for single-pass) likely uses more energy, since the processor stays active longer. This is reasoning from runtime, not an actual energy measurement.
