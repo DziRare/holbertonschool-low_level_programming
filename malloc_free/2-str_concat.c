@@ -17,12 +17,18 @@ char *str_concat(char *s1, char *s2)
 	unsigned int j;
 
 	s1_len = 0;
+	if (s1 != NULL)
+	{
 	while (s1[s1_len] != '\0')
 		s1_len++;
+	}
 
 	s2_len = 0;
+	if (s2 != NULL)
+	{
 	while (s2[s2_len] != '\0')
 		s2_len++;
+	}
 
 	concat_string = malloc((s1_len + s2_len + 2) * sizeof(char));
 	if (concat_string == NULL)
