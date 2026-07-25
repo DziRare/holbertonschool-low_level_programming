@@ -1,13 +1,13 @@
-#ifndef _DOG_H_
-#define _DOG_H_
+#ifndef _DOG_T_H_
+#define _DOG_T_H_
 
 /**
- * struct dog - Defines a dog
+ * struct dog_t - Defines a dog
  * @name: Name of dog
  * @age: Age of dog
  * @owner: Owner of dog
  */
-struct dog
+struct dog_t
 {
 	char *name;
 	float age;
@@ -18,4 +18,4 @@ void init_dog(struct dog *d, char *name, float age, char *owner);
 
 void print_dog(struct dog *d);
 
-#endif /* _DOG_H_ */
+#endif /* _DOG_T_H_ */
