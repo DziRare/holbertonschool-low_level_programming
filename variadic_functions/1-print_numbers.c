@@ -16,6 +16,10 @@ void print_numbers(const char *separator, const unsigned int n, ...)
 	int current_number;
 
 	va_start(numbers, n);
+	if (separator == NULL)
+	{
+		separator = "";
+	}
 	for (i = 0; i < n; i++)
 	{
 		current_number = va_arg(numbers, int);
