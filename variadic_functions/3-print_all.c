@@ -32,7 +32,14 @@ int select_type(va_list *print_list, char type)
 			return (0);
 		case ('s'):
 			str_item = va_arg(*print_list, char *);
-			printf("%s", str_item);
+			if (str_item == NULL)
+			{
+				printf("(nil)");
+			}
+			else
+			{
+				printf("%s", str_item);
+			}
 			return (0);
 		default:
 			return (1);
