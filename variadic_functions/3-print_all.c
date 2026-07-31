@@ -59,7 +59,7 @@ void print_all(const char * const format, ...)
 
 	va_start(list, format);
 	index = 0;
-	while (format[index] != '\0')
+	while (format != NULL && format[index] != '\0')
 	{
 		current_type = format[index];
 		skip = select_type(&list, current_type);
