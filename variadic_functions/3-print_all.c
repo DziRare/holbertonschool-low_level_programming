@@ -35,11 +35,9 @@ int select_type(va_list *print_list, char type)
 			if (str_item == NULL)
 			{
 				printf("(nil)");
+				return (0);
 			}
-			else
-			{
-				printf("%s", str_item);
-			}
+			printf("%s", str_item);
 			return (0);
 		default:
 			return (1);
