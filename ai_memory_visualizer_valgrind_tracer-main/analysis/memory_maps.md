@@ -216,6 +216,8 @@ Step 10: "Block H: still marked FREED, was never re-allocated by this program, s
 
 ## Crash Example
 
+### AI Generated Memory Map
+
 ### Key Execution Points
 1. (Line 24) The variable nums is assigned as a pointer in stack memory. Currently it holds the address NULL.
 2. (Line 25) The varibale `n` is assigned the value 0 in stack memory.
@@ -322,7 +324,7 @@ HEAP
  
 At this point `nums` is a **null pointer**, not a dangling pointer — it was never made to point at valid memory in the first place. The bug here is different in kind from the aliasing/use-after-free example: there, pointers *became* invalid after a valid object was freed; here, the pointer was *never valid* to begin with, and nothing checked for that before using it.
  
-## Step 5 — `nums[0] = 42;` — NULL pointer dereference (crash)
+#### Step 5 — `nums[0] = 42;` — NULL pointer dereference (crash)
  
 `nums[0]` is shorthand for `*(nums + 0)`, i.e. "write to the memory at address `NULL + 0`." Address `0` (and the small range around it) is deliberately kept unmapped by the operating system precisely so that this kind of bug is caught immediately.
  
@@ -378,3 +380,9 @@ nums[0] = 42;
 ```
  
 This turns a hard crash into a graceful, recoverable error path.
+
+## AI Assumptions and Inaccuraties
+
+Didn't note any inaccuracies here.
+
+
