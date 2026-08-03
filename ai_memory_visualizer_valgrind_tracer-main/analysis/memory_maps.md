@@ -1,6 +1,6 @@
 # Memory Maps
 
-## Aliasing-Example.c
+## Aliasing Example
 
 ### Key Execution Points
 1. (Lines 24 - 25) Pointers to variables a and b are created. Both pointers are NULL.
@@ -210,6 +210,171 @@ so it just leaks back to the OS at process exit.
 
 ### AI Assumptions and Inaccuracies
 
-Step 8: "This is exactly the class of bug Valgrind's memcheck flags as "Invalid read of size 4."" - Assumption of Valgrind output despite no Valgrind output being present
-Step 9: "writing through a dangling pointer corrupts memory the allocator now considers free" - Very bad but doesn't necessarily corrupt the data. Corrupting data is a risk but the behaviour is undefined.
-Step 10: "Block H: still marked FREED, was never re-allocated by this program, so it just `leaks` back to the OS at process exit." - Could just be the wrong wording. Mememory leak happens specifically when memory isn't freed.
+Step 8: "This is exactly the class of bug Valgrind's memcheck flags as "Invalid read of size 4."" - Assumption of Valgrind output despite no Valgrind output being present  
+Step 9: "writing through a dangling pointer corrupts memory the allocator now considers free" - Very bad but doesn't necessarily corrupt the data. Corrupting data is a risk but the behaviour is undefined.  
+Step 10: "Block H: still marked FREED, was never re-allocated by this program, so it just `leaks` back to the OS at process exit." - Could just be the wrong wording. Mememory leak happens specifically when memory isn't freed. 
+
+## Crash Example
+
+### Key Execution Points
+1. (Line 24) The variable nums is assigned as a pointer in stack memory. Currently it holds the address NULL.
+2. (Line 25) The varibale `n` is assigned the value 0 in stack memory.
+3. (Line 28) The variable `n` is accessed from stack memory and its value printed out
+4. (Line 30) Function `allocate_numbers()` called with the variable `n` passed through
+5. (Line 6) The variable `arr` is assigned as a pointer in stack memory. This variable is local to the `allocate_numbers()` function. Holds the address NULL.
+6. (Line 7) The variable `i` is assigned the value 0.
+7. (Lines 9 - 10) `n` in this case contains the value of 0. Thus, the function returns the value NULL
+8. The pointer nums, still holds the address NULL as that is what was returned from the `allocate_numbers` function
+9. Program attempts to assign the value 42 to nums[0]. However, as nums holds the address NULL, it is attempting to store a value in memory that is does not have access to. The program should hit a segmentation error at this point.
+
+### Memory Map Walkthrough: `crash_example.c`
+ 
+This document traces `crash_example.c` step by step, showing the stack, heap, and pointer state at each point in execution — including the NULL-pointer dereference that causes the segmentation fault.
+ 
+#### Step 0 — `main()` starts
+ 
+```
+STACK
+┌─────────────────────────────┐
+│ main()                       │
+│   nums = NULL                │
+│   n    = 0                   │
+└─────────────────────────────┘
+ 
+HEAP
+(empty)
+```
+ 
+#### Step 1 — the two `printf` calls run
+ 
+Nothing changes in memory; this just confirms `n = 0` is what will be passed to `allocate_numbers`.
+ 
+```
+STACK
+┌─────────────────────────────┐
+│ main()                       │
+│   nums = NULL                │
+│   n    = 0                   │
+└─────────────────────────────┘
+ 
+HEAP
+(empty)
+```
+ 
+#### Step 2 — `allocate_numbers(0)` is called
+ 
+A new stack frame is pushed on top of `main`'s frame.
+ 
+```
+STACK
+┌─────────────────────────────┐
+│ allocate_numbers()            │
+│   n   = 0   (parameter)       │
+│   arr = NULL                  │
+│   i   = 0                     │
+├─────────────────────────────┤
+│ main()                        │
+│   nums = NULL                 │
+│   n    = 0                    │
+└─────────────────────────────┘
+ 
+HEAP
+(empty)
+```
+ 
+#### Step 3 — `if (n <= 0) return NULL;` fires
+ 
+Since `n` is `0`, the guard clause is true. The function returns immediately — **`malloc` is never reached**, so no heap allocation ever happens on this path. `arr` is discarded still holding `NULL`.
+ 
+```
+STACK
+┌─────────────────────────────┐
+│ allocate_numbers()            │
+│   n   = 0                     │
+│   arr = NULL   (never used)   │
+│   i   = 0                     │
+│   → returning NULL            │
+├─────────────────────────────┤
+│ main()                        │
+│   nums = NULL                 │
+│   n    = 0                    │
+└─────────────────────────────┘
+ 
+HEAP
+(empty — malloc was skipped entirely)
+```
+ 
+#### Step 4 — `allocate_numbers`'s frame is popped
+ 
+The return value `NULL` is handed back to `main` and assigned to `nums`. The callee's frame (`n`, `arr`, `i`) ceases to exist.
+ 
+```
+STACK
+┌─────────────────────────────┐
+│ main()                       │
+│   nums = NULL   ← received   │
+│   n    = 0                   │
+└─────────────────────────────┘
+ 
+HEAP
+(empty)
+```
+ 
+At this point `nums` is a **null pointer**, not a dangling pointer — it was never made to point at valid memory in the first place. The bug here is different in kind from the aliasing/use-after-free example: there, pointers *became* invalid after a valid object was freed; here, the pointer was *never valid* to begin with, and nothing checked for that before using it.
+ 
+## Step 5 — `nums[0] = 42;` — NULL pointer dereference (crash)
+ 
+`nums[0]` is shorthand for `*(nums + 0)`, i.e. "write to the memory at address `NULL + 0`." Address `0` (and the small range around it) is deliberately kept unmapped by the operating system precisely so that this kind of bug is caught immediately.
+ 
+```
+STACK
+┌─────────────────────────────┐
+│ main()                       │
+│   nums = NULL   ─────┐       │
+│   n    = 0            │       │
+└───────────────────────┼──────┘
+                         ▼
+                  address 0x0
+              ┌───────────────────┐
+              │   UNMAPPED PAGE     │  ← write attempted here
+              └───────────────────┘
+                         │
+                         ▼
+              SIGSEGV — segmentation fault
+              process terminates immediately
+```
+ 
+**Execution stops here.** The program never reaches the third `printf`, the `free(nums)` call, or `return 0;` — the OS kills the process as soon as the invalid write is attempted. Unlike the aliasing example (which produces silent, undefined-but-not-always-crashing behavior), this bug is **deterministic**: every run with `n = 0` crashes at exactly the same line, which is why the file is named `crash_example`.
+ 
+#### Steps that never happen
+ 
+Because the crash is fatal, the following never execute and are shown only for completeness of what *would* have happened if `nums` had been valid:
+ 
+```
+(unreached) printf("  nums[0]=%d\n", nums[0]);
+(unreached) free(nums);
+(unreached) return 0;
+```
+ 
+---
+ 
+#### Summary of what's actually wrong
+ 
+| Bug | Where | Why it matters |
+|---|---|---|
+| **Missing NULL check** | `nums = allocate_numbers(n);` (step 4) | `allocate_numbers` clearly documents (via its own `if (!arr) return NULL;` and `if (n <= 0) return NULL;` guards) that it can return `NULL`, but `main` never checks the result before using it. |
+| **NULL pointer dereference** | `nums[0] = 42;` (step 5) | Writing through a `NULL` pointer accesses an intentionally unmapped page, so the OS raises `SIGSEGV` and kills the process on the spot. |
+| **No allocation ever occurs** | `allocate_numbers(0)` (step 3) | Worth noting for contrast with the aliasing example: this isn't a heap-corruption or use-after-free bug — the heap is never touched at all. The entire bug lives in the stack/pointer logic in `main`. |
+ 
+**Fix pattern:** check the return value before use:
+ 
+```c
+nums = allocate_numbers(n);
+if (!nums) {
+    fprintf(stderr, "allocation failed or n <= 0\n");
+    return 1;
+}
+nums[0] = 42;
+```
+ 
+This turns a hard crash into a graceful, recoverable error path.
