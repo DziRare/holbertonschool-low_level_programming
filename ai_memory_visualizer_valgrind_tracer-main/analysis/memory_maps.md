@@ -207,3 +207,9 @@ so it just leaks back to the OS at process exit.
 | **Dangling pointer** | `a` and `b` after step 6 | Neither is set to `NULL` after `free()`, so nothing distinguishes "valid pointer" from "freed pointer" at the type level. |
  
 **Fix pattern:** set `a = NULL;` right after `free(a);`, and since `b` is just a copy of the same address, either avoid the second alias entirely or null it out too (`b = NULL;`) — nulling `a` alone doesn't protect `b`, since they're independent variables that happened to hold the same value.
+
+### AI Assumptions and Inaccuracies
+
+Step 8: "This is exactly the class of bug Valgrind's memcheck flags as "Invalid read of size 4."" - Assumption of Valgrind output despite no Valgrind output being present
+Step 9: "writing through a dangling pointer corrupts memory the allocator now considers free" - Very bad but doesn't necessarily corrupt the data. Corrupting data is a risk but the behaviour is undefined.
+Step 10: "Block H: still marked FREED, was never re-allocated by this program, so it just `leaks` back to the OS at process exit." - Could just be the wrong wording. Mememory leak happens specifically when memory isn't freed.
