@@ -1,0 +1,39 @@
+Input and output radices now set to decimal 8, hex 8, octal 10.
+Breakpoint 1 at 0x1584: file source.c, line 115.
+Breakpoint 2 at 0x158e: file source.c, line 116.
+Starting program: /root/holbertonschool-low_level_programming/dynamic_analysis/source 
+warning: Error disabling address space randomization: Operation not permitted
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, validate (user_pin=0361100) at source.c:115
+115	    if ((tgt & 1u) == 0u) {
+$1 = 014331504233
+Invalid number "8".
+Input and output radices now set to decimal 8, hex 8, octal 10.
+$2 = 014331504233
+Wrong number of arguments for specified format-string
+0x6366889B
+118	        tgt += (k ^ 0x00C0FFEEu);
+0x6366889B
+122	        unsigned int mask = mix32(k ^ 0x0BADF00Du) & 0x0000FFFFu;
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000055555df85584 in validate at source.c:115
+	breakpoint already hit 1 time
+2       breakpoint     keep y   0x000055555df8558e in validate at source.c:116
+Hardware watchpoint 3: tgt
+Starting program: /root/holbertonschool-low_level_programming/dynamic_analysis/source 
+warning: Error disabling address space randomization: Operation not permitted
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, validate (user_pin=0361100) at source.c:115
+115	    if ((tgt & 1u) == 0u) {
+118	        tgt += (k ^ 0x00C0FFEEu);
+$3 = 014331504233
+122	        unsigned int mask = mix32(k ^ 0x0BADF00Du) & 0x0000FFFFu;
+$4 = 024760340107
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000055d670f42584 in validate at source.c:115
+	breakpoint already hit 1 time
+2       breakpoint     keep y   0x000055d670f4258e in validate at source.c:116
