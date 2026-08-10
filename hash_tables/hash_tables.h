@@ -42,4 +42,6 @@ void hash_table_dump(const hash_table_t *ht);
 
 char *hash_table_get(const hash_table_t *ht, const char *key);
 
+void hash_table_print(const hash_table_t *ht);
+
 #endif /* _HASH_TABLE_H_ */
