@@ -40,4 +40,6 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value);
 
 void hash_table_dump(const hash_table_t *ht);
 
+char *hash_table_get(const hash_table_t *ht, const char *key);
+
 #endif /* _HASH_TABLE_H_ */
