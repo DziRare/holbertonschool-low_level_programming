@@ -26,7 +26,7 @@ int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
 		free(tracker);
 		return (1);
 	}
-   
+
 	current_index = 0;
 	while (current_index < index && tracker)
 	{
