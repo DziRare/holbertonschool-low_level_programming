@@ -29,10 +29,13 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 		current_index = current_index + 1;
 	}
 
-	if (idx == current_index + 1)
-		return (add_dnodeint_end(h, n));
-	else if (idx > current_index + 1)
-		return (NULL);
+	if (tracker->next == NULL)
+	{
+		if (idx == current_index + 1)
+			return (add_dnodeint_end(h, n));
+		else if (idx > current_index + 1)
+			return (NULL);
+	}
 
 	new_node = malloc(sizeof(dlistint_t));
 	if (new_node == NULL)
