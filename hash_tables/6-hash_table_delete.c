@@ -27,10 +27,13 @@ void hash_table_delete(hash_table_t *ht)
 		{
 			node = node->next;
 			temp->next = NULL;
+			free(temp->key);
+			free(temp->value);
 			free(temp);
 			temp = node;
 		}
 	}
+	free(ht->array);
 	free(ht);
 	ht = NULL;
 }
