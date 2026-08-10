@@ -6,6 +6,8 @@
  * @ht: Pointer to hash table
  * @key: String that's going to be used as a key for the hash table
  * @value: Value associated with key
+ *
+ * Return: 1 on success, 0 on failure
  */
 int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
@@ -25,16 +27,12 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	new_node->next = NULL;
 	if (ht->array[index] == NULL)
 	{
-		
 		ht->array[index] = new_node;
 	}
 	else
 	{
-		while (ht->array[index]->next != NULL)
-		{
-			ht->array[index] = ht->array[index]->next;
-		}
-		ht->array[index]->next = new_node;
+		new_node->next = ht->array[index];
+		ht->array[index] = new_node;
 	}
 
 	return (1);
