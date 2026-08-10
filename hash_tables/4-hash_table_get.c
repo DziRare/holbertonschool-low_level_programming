@@ -6,6 +6,8 @@
  * hash_table_get - Retrieves value associated with key
  * @ht: Pointer to hash table
  * @key: Key to look for
+ *
+ * Return: Value associated with key
  */
 char *hash_table_get(const hash_table_t *ht, const char *key)
 {
@@ -23,7 +25,7 @@ char *hash_table_get(const hash_table_t *ht, const char *key)
 	if (temp == NULL)
 	{
 		return (NULL);
-	} 
+	}
 
 	return (temp->value);
 }
