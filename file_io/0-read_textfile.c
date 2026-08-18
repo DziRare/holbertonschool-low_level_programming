@@ -5,6 +5,10 @@
 
 /**
  * read_textfile - Reads a text file and prints it to the POSIX standard output
+ * @filename: Name of file to read from
+ * @letters: Number of letters to be read
+ * 
+ * Return: Number of letters written
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
@@ -46,7 +50,7 @@ ssize_t read_textfile(const char *filename, size_t letters)
 	{
 		return (0);
 	}
-	printf("%s", buffer);
+	free(buffer);
 	close(file);
 
 	return (letters_written);
