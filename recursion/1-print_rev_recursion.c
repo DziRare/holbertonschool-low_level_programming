@@ -1,5 +1,22 @@
 #include "main.h"
 
+
+/**
+ * _print_rev_chars - Print each char
+ * @s: String to print
+ *
+ * Return: No return value
+ */
+void _print_rev_chars(char *s)
+{
+	if (*s != '\0')
+	{
+		s++;
+		_print_rev_chars(s);
+		_putchar(*s);
+	}
+}
+
 /**
  * _print_rev_recursion - Print a string backwards
  * @s: String to print
@@ -8,10 +25,6 @@
  */
 void _print_rev_recursion(char *s)
 {
-	if (*s != '\0')
-	{
-		s++;
-		_print_rev_recursion(s);
-		_putchar(*s);
-	}	
+	_print_rev_chars(s);
+	_putchar('\n');
 }
